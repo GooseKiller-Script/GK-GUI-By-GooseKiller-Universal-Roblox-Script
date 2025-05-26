@@ -8,16 +8,10 @@
 
 *Instructions:*
 
-Download Google Roblox Explorer (I recommend Delta Roblox) 
-
-Remove Original Roblox 
-
-Install the downloaded explorer 
-
-We receive the key
-
-Press the joystick 
-
-Copy this: loadstring(game:HttpGet("https://raw.githubusercontent.com/GooseKiller-Script/GK-Hub-By-GooseKiller-Universal-Roblox-Script/blob/main/GK_obfuscated.lua"))()
-
-Paste the copied text and click Excute
+1. Download Google Roblox Explorer (I recommend Delta Roblox) 
+2. Remove Original Roblox 
+3. Install the downloaded explorer 
+4. We receive the key
+5. Press the joystick 
+6. Copy this: loadstring(game:HttpGet("https://raw.githubusercontent.com/GooseKiller-Script/GK-Hub-By-GooseKiller-Universal-Roblox-Script/blob/main/GK_obfuscated.lua"))()
+7. Paste the copied text and click Excute
