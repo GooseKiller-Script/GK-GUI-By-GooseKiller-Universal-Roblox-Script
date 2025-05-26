@@ -18,7 +18,6 @@ We receive the key
 
 Press the joystick 
 
-Copy this: loadstring(game:HttpGet("https://raw.githubusercontent.com/GooseKiller-Script/GK-Hub-By-GooseKiller-Universal-Roblox-Script/blob/main/GK.lua"))()
+Copy this: loadstring(game:HttpGet("https://raw.githubusercontent.com/GooseKiller-Script/GK-Hub-By-GooseKiller-Universal-Roblox-Script/blob/main/GK_obfuscated.lua"))()
 
-
-
+Paste the copied text and click Excute
