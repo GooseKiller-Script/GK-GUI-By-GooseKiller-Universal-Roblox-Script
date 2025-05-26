@@ -6,7 +6,7 @@
 
 **Features: NoClip, Infinity Jump, Spawn Object, No Gravity, Teleport to Player, WalkingBot, Aim, AimBot, ViewBot, ESP, ESP Line, Jump Power, Fall Speed, Teleport UP 500m, Speed**
 
-**Instructions:*
+*Instructions:*
 
 Download Google Roblox Explorer (I recommend Delta Roblox) 
 
