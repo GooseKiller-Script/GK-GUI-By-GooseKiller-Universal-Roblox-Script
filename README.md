@@ -15,10 +15,16 @@
 5. Press the joystick 
 6. Copy this:
  getgenv().GKSetting = {
+
     AutoExecute = true,
+   
     autoSHOPDelay = 70
+   
 }
+
 EnabledScript = true
+
 SaveNewSettings = true
+
 loadstring(game:HttpGet("https://raw.githubusercontent.com/GooseKiller-Script/GK-Hub-By-GooseKiller-Universal-Roblox-Script/refs/heads/main/GK_obfuscated.lua"))()
-7. Paste the copied text and click Excute
+8. Paste the copied text and click Excute
