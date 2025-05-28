@@ -8,6 +8,7 @@
 
 **Creator: GooseKiller-Script**
 
+**Functions: NoClip, Inf. Jump, Spawn Object, Remove Object, AutoKill, Spam, AimBot, Aim, WalkingBot, ViewBot, ESP, ESP Line, Sasuage, NoGravity, Teleport UP 500m**
 
 *Instructions:*
 
