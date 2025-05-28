@@ -1,4 +1,4 @@
-# GK-Hub | By GooseKiller
+# GK-Hub | By GooseKiller (v1.0)
 ![Icon](https://github.com/GooseKiller-Script/GK-Hub-By-GooseKiller-Universal-Roblox-Script/blob/main/GK-Hub-Icon.jpg)
 **Game: Roblox**
 
