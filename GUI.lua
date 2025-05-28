@@ -34,13 +34,6 @@ createButton("GK-Hub", 20, function()
     end)
 end)
 
-createButton("Crash", 70, function()
-    while true do
-        game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer("Goose", "All")
-        task.wait()
-    end
-end)
-
 createButton("Auto Kill", 120, function()
     pcall(function()
         loadstring(game:HttpGet("https://raw.githubusercontent.com/GooseKiller-Script/GK-Hub-By-GooseKiller-Universal-Roblox-Script/main/AutoKill.lua"))()
