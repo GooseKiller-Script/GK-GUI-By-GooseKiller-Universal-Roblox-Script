@@ -19,8 +19,7 @@ end
 local ScreenGui = Instance.new("ScreenGui")
 ScreenGui.Name = "GKHubGui"
 ScreenGui.Parent = LocalPlayer:WaitForChild("PlayerGui")
-ScreenGui.ResetOnSpawn = false
-ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling 
+ScreenGui.ResetOnSpawn = True
 local ToggleIcon = Instance.new("TextButton")
 ToggleIcon.Size = UDim2.new(0, 60, 0, 30)
 ToggleIcon.Position = UDim2.new(1, -70, 0, 10)
@@ -339,10 +338,6 @@ local GravityConnection = nil
 local SausageConnection = nil 
 local sausageOriginalCFrame = nil 
 local spinAngle = 0 
-local function onCharacterAdded(character)
-    local humanoid = character:WaitForChild("Humanoid")
-    local rootPart = character:WaitForChild("HumanoidRootPart")
-    
 local function ToggleMainMenu()
     MainFrame.Visible = not MainFrame.Visible
     speedPopup.Visible = false
@@ -1155,14 +1150,7 @@ RunService.Heartbeat:Connect(function()
         UpdateESPLines()
     end
 end)
-task.wait(0.5) 
-
-if player.Character then
-    onCharacterAdded(player.Character)
-end
-
-player.CharacterAdded:Connect(onCharacterAdded)
-    
+task.wait(0.5)     
 StarterGui:SetCore("SendNotification", {
     Title = "GK-Hub",
     Text = "GK-Hub Loaded! Click the GK icon.",
