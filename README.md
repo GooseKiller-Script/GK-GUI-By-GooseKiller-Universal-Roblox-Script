@@ -1,5 +1,5 @@
-# GK-Hub | By GooseKiller (v1.0)
-![Icon](https://github.com/GooseKiller-Script/GK-Hub-By-GooseKiller-Universal-Roblox-Script/blob/main/GK-Hub-Icon.jpg)
+# GK-GUI | By GooseKiller (v1.0)
+![Icon](https://github.com/GooseKiller-Script/GK-Hub-By-GooseKiller-Universal-Roblox-Script/blob/main/GK-GUI-Icon.png)
 **Game: Roblox**
 
 **Suitable for: All places**
@@ -7,8 +7,6 @@
 **Inspired by: c00lkidd, Bomb Hacker**
 
 **Creator: GooseKiller-Script**
-
-**Functions: NoClip, Inf. Jump, Spawn Object, Remove Object, AutoKill, Spam, AimBot, Aim, WalkingBot, ViewBot, ESP, ESP Line, Sasuage, NoGravity, Teleport UP 500m**
 
 *Instructions:*
 
