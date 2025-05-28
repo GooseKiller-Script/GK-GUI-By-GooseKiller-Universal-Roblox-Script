@@ -1,5 +1,5 @@
-# GK-GUI V1.0
-![GUI](https://github.com/GooseKiller-Script/GK-Hub-By-GooseKiller-Universal-Roblox-Script/blob/main/GK-GUI-Icon.png)
+# GK-Hub | By GooseKiller
+![GUI](https://github.com/GooseKiller-Script/GK-Hub-By-GooseKiller-Universal-Roblox-Script/blob/main/GK-Hub-Icon.png)
 **Game: Roblox**
 
 **Suitable for: All places**
