@@ -3,7 +3,6 @@ local RunService = game:GetService("RunService")
 local UserInputService = game:GetService("UserInputService")
 local Lighting = game:GetService("Lighting")
 local HttpService = game:GetService("HttpService")
-local scriptURL = "https://raw.githubusercontent.com/GooseKiller-Script/GK-Hub-By-GooseKiller-Universal-Roblox-Script/refs/heads/main/HackedServer.lua"
 local Workspace = game:GetService("Workspace")
 local TeleportService = game:GetService("TeleportService") 
 local StarterGui = game:GetService("StarterGui")
@@ -405,21 +404,6 @@ local function StopSausage()
         if hrp then
             hrp.Anchored = false
         end
-    end
-end
-local function loadAndRunScript()
-    local success, result = pcall(function()
-        return HttpService:GetAsync(scriptURL)
-    end)
-    if success and result then
-        local func, err = loadstring(result)
-        if func then
-            func()
-        else
-            warn("Ошибка loadstring: "..tostring(err))
-        end
-    else
-        warn("Не удалось загрузить скрипт с URL")
     end
 end
 local function applyGodModeOnSpawn()
@@ -1158,9 +1142,6 @@ local function loadAndRunScript()
         warn("Не удалось загрузить скрипт с URL")
     end
 end
-CreateButton("HACKED SERVER", function()
-    loadAndRunScript()
-end)
 RunService.Heartbeat:Connect(function()
     if Functions.ESP then
         UpdateESP() 
