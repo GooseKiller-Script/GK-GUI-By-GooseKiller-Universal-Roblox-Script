@@ -19,7 +19,7 @@ while true do
     for _, player in pairs(Players:GetPlayers()) do
         if player ~= LocalPlayer then
             pcall(function()
-                ChatRemote:FireServer("HAHAHAHAHAHAHA", "All")
+                ChatRemote:FireServer("HAHAHAHAHAHAHA")
             end)
         end
     end
