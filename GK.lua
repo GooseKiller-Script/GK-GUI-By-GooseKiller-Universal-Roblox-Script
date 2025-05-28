@@ -1127,21 +1127,18 @@ CreateButton("No Gravity: OFF", function(btn)
     btn.Text = Functions.NoGravity and "No Gravity: ON" or "No Gravity: OFF"
     if Functions.NoGravity then StartNoGravity() else StopNoGravity() end
 end)
-local function loadAndRunScript()
-    local success, result = pcall(function()
-        return HttpService:GetAsync(scriptURL)
-    end)
-    if success and result then
-        local func, err = loadstring(result)
-        if func then
-            func()
-        else
-            warn("Ошибка loadstring: "..tostring(err))
-        end
+createButton("Remove Object", 220, function()
+    local player = game:GetService("Players").LocalPlayer
+    local mouse = player:GetMouse()
+    local target = mouse.Target
+
+    if target and target:IsDescendantOf(workspace) then
+        target:Destroy()
+        print("Удалён объект: " .. target.Name)
     else
-        warn("Не удалось загрузить скрипт с URL")
+        warn("Нет объекта под взглядом!")
     end
-end
+end)
 RunService.Heartbeat:Connect(function()
     if Functions.ESP then
         UpdateESP() 
