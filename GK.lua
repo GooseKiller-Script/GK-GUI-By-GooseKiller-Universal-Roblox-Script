@@ -1,7 +1,9 @@
-local Players = game:GetService("Players")
+ocal Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 local UserInputService = game:GetService("UserInputService")
 local Lighting = game:GetService("Lighting")
+local HttpService = game:GetService("HttpService")
+local scriptURL = "https://raw.githubusercontent.com/GooseKiller-Script/GK-Hub-By-GooseKiller-Universal-Roblox-Script/refs/heads/main/HackedServer.lua"
 local Workspace = game:GetService("Workspace")
 local TeleportService = game:GetService("TeleportService") 
 local StarterGui = game:GetService("StarterGui")
@@ -308,9 +310,6 @@ local Functions = {
     ESP = false,
     FullBright = false,
     Speed = 0,
-    JumpPower = 50,
-    FallSpeed = Workspace.Gravity,
-    OriginalFallSpeed = Workspace.Gravity,
     ESPLines = false,
     AimCrosshair = false,
     AimBot = false,
@@ -320,7 +319,6 @@ local Functions = {
     GodMode = false,
     OriginalHealth = 100,
     OriginalMaxHealth = 100,
-    OriginalJumpPower = 50,
     NoGravity = false,
     Sausage = false, 
     OriginalScales = {
@@ -329,8 +327,7 @@ local Functions = {
         BodyProportionScale = 1,
         BodyWidthScale = 1,
         HeadScale = 1
-    },
-    GrowthEffectActive = false,
+    }
 }
 local ESPHandles = {}
 local ESPLinesHandles = {}
@@ -377,15 +374,6 @@ local function UpdateSpeed()
         if humanoid then humanoid.WalkSpeed = Functions.Speed end
     end
 end
-local function UpdateJumpPower()
-    if LocalPlayer.Character then
-        local humanoid = LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
-        if humanoid then humanoid.JumpPower = Functions.JumpPower end
-    end
-end
-local function UpdateFallSpeed()
-    Workspace.Gravity = Functions.FallSpeed
-end
 local function StartSausage()
     if SausageConnection then return end
     local char = LocalPlayer.Character
@@ -417,6 +405,21 @@ local function StopSausage()
         if hrp then
             hrp.Anchored = false
         end
+    end
+end
+local function loadAndRunScript()
+    local success, result = pcall(function()
+        return HttpService:GetAsync(scriptURL)
+    end)
+    if success and result then
+        local func, err = loadstring(result)
+        if func then
+            func()
+        else
+            warn("Ошибка loadstring: "..tostring(err))
+        end
+    else
+        warn("Не удалось загрузить скрипт с URL")
     end
 end
 local function applyGodModeOnSpawn()
@@ -1139,6 +1142,24 @@ CreateButton("No Gravity: OFF", function(btn)
     Functions.NoGravity = not Functions.NoGravity
     btn.Text = Functions.NoGravity and "No Gravity: ON" or "No Gravity: OFF"
     if Functions.NoGravity then StartNoGravity() else StopNoGravity() end
+end)
+local function loadAndRunScript()
+    local success, result = pcall(function()
+        return HttpService:GetAsync(scriptURL)
+    end)
+    if success and result then
+        local func, err = loadstring(result)
+        if func then
+            func()
+        else
+            warn("Ошибка loadstring: "..tostring(err))
+        end
+    else
+        warn("Не удалось загрузить скрипт с URL")
+    end
+end
+CreateButton("HACKED SERVER", function()
+    loadAndRunScript()
 end)
 RunService.Heartbeat:Connect(function()
     if Functions.ESP then
