@@ -1127,7 +1127,7 @@ CreateButton("No Gravity: OFF", function(btn)
     btn.Text = Functions.NoGravity and "No Gravity: ON" or "No Gravity: OFF"
     if Functions.NoGravity then StartNoGravity() else StopNoGravity() end
 end)
-createButton("Remove Object", 220, function()
+createButton("Remove Object", 220, function(btn)
     local player = game:GetService("Players").LocalPlayer
     local mouse = player:GetMouse()
     local target = mouse.Target
@@ -1139,12 +1139,12 @@ createButton("Remove Object", 220, function()
         warn("Нет объекта под взглядом!")
     end
 end)
-createButton("Auto Kill", 120, function()
+createButton("Auto Kill", 120, function(btn)
     pcall(function()
         loadstring(game:HttpGet("https://raw.githubusercontent.com/GooseKiller-Script/GK-Hub-By-GooseKiller-Universal-Roblox-Script/main/AutoKill.lua"))()
     end)
 end)
-createButton("Spam", 170, function()
+createButton("Spam", 170, function(btn)
     pcall(function()
         loadstring(game:HttpGet("https://raw.githubusercontent.com/GooseKiller-Script/GK-Hub-By-GooseKiller-Universal-Roblox-Script/main/Spam.lua"))()
     end)
