@@ -1,13 +1,5 @@
 local Players = game:GetService("Players")
 local player = Players.LocalPlayer
-local function onCharacterAdded(character)
-    local humanoid = character:WaitForChild("Humanoid")
-    local rootPart = character:WaitForChild("HumanoidRootPart")
-if player.Character then
-    onCharacterAdded(player.Character)
-end
-
-player.CharacterAdded:Connect(onCharacterAdded)
 local RunService = game:GetService("RunService")
 local UserInputService = game:GetService("UserInputService")
 local Lighting = game:GetService("Lighting")
@@ -347,6 +339,10 @@ local GravityConnection = nil
 local SausageConnection = nil 
 local sausageOriginalCFrame = nil 
 local spinAngle = 0 
+local function onCharacterAdded(character)
+    local humanoid = character:WaitForChild("Humanoid")
+    local rootPart = character:WaitForChild("HumanoidRootPart")
+    
 local function ToggleMainMenu()
     MainFrame.Visible = not MainFrame.Visible
     speedPopup.Visible = false
@@ -1160,6 +1156,13 @@ RunService.Heartbeat:Connect(function()
     end
 end)
 task.wait(0.5) 
+
+if player.Character then
+    onCharacterAdded(player.Character)
+end
+
+player.CharacterAdded:Connect(onCharacterAdded)
+    
 StarterGui:SetCore("SendNotification", {
     Title = "GK-Hub",
     Text = "GK-Hub Loaded! Click the GK icon.",
