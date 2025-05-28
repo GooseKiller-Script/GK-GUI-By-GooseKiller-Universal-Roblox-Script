@@ -13,6 +13,18 @@ Frame.BorderColor3 = Color3.fromRGB(255, 0, 0)
 Frame.BorderSizePixel = 3
 Frame.Parent = ScreenGui
 
+local Title = Instance.new("TextLabel")
+Title.Size = UDim2.new(1, 0, 0, 40)
+Title.Position = UDim2.new(0, 0, 0, 0)
+Title.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+Title.BorderColor3 = Color3.fromRGB(255, 0, 0)
+Title.BorderSizePixel = 2
+Title.Text = "GK-GUI | By GooseKiller"
+Title.TextColor3 = Color3.fromRGB(255, 0, 0)
+Title.Font = Enum.Font.GothamBold
+Title.TextSize = 20
+Title.Parent = Frame
+
 local function createButton(text, y, callback)
     local button = Instance.new("TextButton")
     button.Size = UDim2.new(0, 260, 0, 40)
@@ -28,13 +40,13 @@ local function createButton(text, y, callback)
     button.MouseButton1Click:Connect(callback)
 end
 
-createButton("GK-Hub", 20, function()
+createButton("GK-Hub", 60, function()
     pcall(function()
         loadstring(game:HttpGet("https://raw.githubusercontent.com/GooseKiller-Script/GK-GUI-By-GooseKiller-Universal-Roblox-Script/main/GK.lua"))()
     end)
 end)
 
-createButton("Auto Kill", 120, function()
+createButton("Auto Kill", 160, function()
     pcall(function()
         loadstring(game:HttpGet("https://raw.githubusercontent.com/GooseKiller-Script/GK-GUI-By-GooseKiller-Universal-Roblox-Script/main/AutoKill.lua"))()
     end)
