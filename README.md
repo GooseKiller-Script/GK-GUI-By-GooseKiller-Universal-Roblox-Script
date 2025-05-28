@@ -3,6 +3,10 @@
 
 **Suitable for: All places**
 
+**Inspired by: c00lkidd, Bomb Hacker**
+
+**Creator: GooseKiller-Script**
+
 
 *Instructions:*
 
