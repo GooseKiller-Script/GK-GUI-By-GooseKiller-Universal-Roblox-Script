@@ -1,10 +1,13 @@
-# GK-Hub V0.1
-![Icon](https://github.com/GooseKiller-Script/GK-Hub-By-GooseKiller-Universal-Roblox-Script/blob/main/GK-Hub-Icon.jpg)
+![GUI](https://github.com/GooseKiller-Script/GK-Hub-By-GooseKiller-Universal-Roblox-Script/blob/main/GK-GUI-Icon.png)
 **Game: Roblox**
 
 **Suitable for: All places**
 
+![Icon](https://github.com/GooseKiller-Script/GK-Hub-By-GooseKiller-Universal-Roblox-Script/blob/main/GK-Hub-Icon.jpg)
+
 **Features: NoClip, Infinity Jump, Spawn Object, No Gravity, Teleport to Player, WalkingBot, Aim, AimBot, ViewBot, ESP, ESP Line, Teleport UP 500m, Speed, HACKED SERVER**
+
+
 
 *Instructions:*
 
@@ -13,5 +16,5 @@
 3. Install the downloaded explorer 
 4. We receive the key
 5. Press the joystick 
-6. Copy this: loadstring(game:HttpGet("https://raw.githubusercontent.com/GooseKiller-Script/GK-Hub-By-GooseKiller-Universal-Roblox-Script/refs/heads/main/GK.lua"))()
+6. Copy this: loadstring(game:HttpGet("https://raw.githubusercontent.com/GooseKiller-Script/GK-GUI-By-GooseKiller-Universal-Roblox-Script/refs/heads/main/GUI.lua"))()
 7. Paste the copied text and click Excute
