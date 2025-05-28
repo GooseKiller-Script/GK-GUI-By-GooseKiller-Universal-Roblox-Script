@@ -16,6 +16,10 @@ repeat task.wait() until LocalPlayer.Character
 if LocalPlayer:FindFirstChild("PlayerGui") and LocalPlayer.PlayerGui:FindFirstChild("GKHubGui") then
     LocalPlayer.PlayerGui.GKHubGui:Destroy()
 end
+local existingGui = player:FindFirstChild("PlayerGui"):FindFirstChild("GKHubGui")
+if existingGui then
+    existingGui:Destroy()
+end
 local ScreenGui = Instance.new("ScreenGui")
 ScreenGui.Name = "GKHubGui"
 ScreenGui.Parent = LocalPlayer:WaitForChild("PlayerGui")
