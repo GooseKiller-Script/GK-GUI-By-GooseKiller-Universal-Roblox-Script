@@ -3,11 +3,6 @@
 
 **Suitable for: All places**
 
-![Icon](https://github.com/GooseKiller-Script/GK-Hub-By-GooseKiller-Universal-Roblox-Script/blob/main/GK-Hub-Icon.jpg)
-
-**Features: NoClip, Infinity Jump, Spawn Object, No Gravity, Teleport to Player, WalkingBot, Aim, AimBot, ViewBot, ESP, ESP Line, Teleport UP 500m, Speed, HACKED SERVER**
-
-
 
 *Instructions:*
 
