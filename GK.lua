@@ -333,6 +333,9 @@ local Functions = {
     }
 }
 local ESPHandles = {}
+local SpiderEnabled = false
+local AttackGuis = {}
+local spiderButton = nil
 local ESPLinesHandles = {}
 local AimBotConnection = nil
 local ViewBotConnection = nil
@@ -1131,6 +1134,96 @@ CreateButton("No Gravity: OFF", function(btn)
     btn.Text = Functions.NoGravity and "No Gravity: ON" or "No Gravity: OFF"
     if Functions.NoGravity then StartNoGravity() else StopNoGravity() end
 end)
+local function attackPlayer(player)
+    local char = player.Character
+    if not char then return end
+    local hum = char:FindFirstChildOfClass("Humanoid")
+    if not hum then return end
+
+    local oldSpeed = hum.WalkSpeed
+    hum.WalkSpeed = 4
+
+    for _ = 1, 10 do
+        if hum.Health > 0 then
+            hum:TakeDamage(5)
+        end
+        task.wait(1)
+    end
+
+    if hum then
+        hum.WalkSpeed = oldSpeed
+    end
+end
+local function createAttackGui(player)
+    local head = player.Character and player.Character:FindFirstChild("Head")
+    if not head then return end
+
+    local billboard = Instance.new("BillboardGui")
+    billboard.Name = "AttackGui"
+    billboard.Adornee = head
+    billboard.Size = UDim2.new(0, 100, 0, 40)
+    billboard.StudsOffset = Vector3.new(0, 2, 0)
+    billboard.AlwaysOnTop = true
+    billboard.Parent = head
+
+    local btn = Instance.new("TextButton")
+    btn.Size = UDim2.new(1, 0, 1, 0)
+    btn.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+    btn.TextColor3 = Color3.new(1, 1, 1)
+    btn.Text = "Attack"
+    btn.TextScaled = true
+    btn.Parent = billboard
+
+    btn.MouseButton1Click:Connect(function()
+        attackPlayer(player)
+    end)
+
+    AttackGuis[player] = billboard
+end
+local function removeAttackGui(player)
+    if AttackGuis[player] then
+        AttackGuis[player]:Destroy()
+        AttackGuis[player] = nil
+    end
+end
+RunService.RenderStepped:Connect(function()
+    if not SpiderEnabled then
+        for player, gui in pairs(AttackGuis) do
+            removeAttackGui(player)
+        end
+        return
+    end
+
+    for _, player in pairs(Players:GetPlayers()) do
+        if player ~= LocalPlayer and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+            local dist = (LocalPlayer.Character.HumanoidRootPart.Position - player.Character.HumanoidRootPart.Position).Magnitude
+            if dist < 15 and not AttackGuis[player] then
+                createAttackGui(player)
+            elseif dist >= 15 then
+                removeAttackGui(player)
+            end
+        else
+            removeAttackGui(player)
+        end
+    end
+end)
+local function spiderClick()
+    SpiderEnabled = not SpiderEnabled
+    
+    local char = LocalPlayer.Character
+    if char then
+        local hum = char:FindFirstChildOfClass("Humanoid")
+        if hum then
+            hum:SetStateEnabled(Enum.HumanoidStateType.Climbing, SpiderEnabled)
+            hum:SetStateEnabled(Enum.HumanoidStateType.Physics, SpiderEnabled)
+        end
+    end
+
+    if spiderButton then
+        spiderButton.Text = "Spider: " .. (SpiderEnabled and "ON" or "OFF")
+    end
+end
+spiderButton = CreateButton("Spider: OFF", Color3.fromRGB(0, 0, 255), spiderClick)
 RunService.Heartbeat:Connect(function()
     if Functions.ESP then
         UpdateESP() 
