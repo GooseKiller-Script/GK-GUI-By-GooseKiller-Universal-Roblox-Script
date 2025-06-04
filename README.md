@@ -4,6 +4,8 @@
 
 **Suitable for: All places**
 
+**KeySystem: No**
+
 **Inspired by: c00lkidd, Bomb Hacker**
 
 **Creator: GooseKiller-Script**
