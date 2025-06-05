@@ -1,10 +1,12 @@
-# GK-GUI | By GooseKiller (v1.0)
+# GK-GUI | By GooseKiller (v2.0)
 ![Icon](https://github.com/GooseKiller-Script/GK-Hub-By-GooseKiller-Universal-Roblox-Script/blob/main/GK-GUI-Icon.png)
 **Game: Roblox**
 
 **Suitable for: All places**
 
 **KeySystem: No**
+
+**Description: Universal script for Roblox that allows you to play without lags, with an advantage over players and identify other cheaters**
 
 **Inspired by: c00lkidd, Bomb Hacker**
 
