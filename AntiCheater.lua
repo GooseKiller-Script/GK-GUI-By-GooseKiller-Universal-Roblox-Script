@@ -11,6 +11,34 @@ local highlights = {}
 local billboards = {}
 local lines = {}
 
+local function isFlying(humanoidRootPart)
+    return humanoidRootPart.Velocity.Y > 100
+end
+
+local function isSlowFalling(humanoidRootPart)
+    return humanoidRootPart.Velocity.Y < -3 and humanoidRootPart.Velocity.Y > -15
+end
+
+local function isNoClip(player)
+    local ray = Ray.new(player.Character.HumanoidRootPart.Position, Vector3.new(0, -5, 0))
+    local part = workspace:FindPartOnRay(ray, player.Character)
+    return not part
+end
+
+local function isSuspicious(player)
+    if not player.Character then return false end
+    local hrp = player.Character:FindFirstChild("HumanoidRootPart")
+    local hum = player.Character:FindFirstChildOfClass("Humanoid")
+    if not hrp or not hum then return false end
+
+    return
+        hum.WalkSpeed > 50 or
+        hum.JumpPower > 100 or
+        isFlying(hrp) or
+        isSlowFalling(hrp) or
+        isNoClip(player)
+end
+
 local function createHighlight(player)
     local character = player.Character
     if not character then return end
@@ -66,6 +94,12 @@ local function announceCheater(player)
 end
 
 local function update()
+    for _, player in ipairs(Players:GetPlayers()) do
+        if player ~= localPlayer and not cheaters[player] and isSuspicious(player) then
+            cheaters[player] = true
+        end
+    end
+
     for player, obj in pairs(highlights) do
         if not player.Character then
             obj:Destroy()
