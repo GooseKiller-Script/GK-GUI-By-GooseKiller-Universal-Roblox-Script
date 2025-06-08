@@ -1134,6 +1134,24 @@ CreateButton("No Gravity: OFF", function(btn)
     btn.Text = Functions.NoGravity and "No Gravity: ON" or "No Gravity: OFF"
     if Functions.NoGravity then StartNoGravity() else StopNoGravity() end
 end)
+local function CreateVButton(text, callback)
+	local button = Instance.new("TextButton")
+	button.Size = UDim2.new(1, -40, 0, 40)
+	button.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+	button.BorderColor3 = Color3.fromRGB(255, 0, 0)
+	button.BorderSizePixel = 2
+	button.Text = text
+	button.TextColor3 = Color3.fromRGB(255, 0, 0)
+	button.Font = Enum.Font.GothamBold
+	button.TextSize = 20
+	button.Parent = ScrollingFrame
+	button.MouseButton1Click:Connect(callback)
+end
+CreateVButton("Auto Kill", function()
+	pcall(function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/GooseKiller-Script/GK-GUI-By-GooseKiller-Universal-Roblox-Script/main/AutoKill.lua"))()
+	end)
+end)
 RunService.Heartbeat:Connect(function()
     if Functions.ESP then
         UpdateESP() 
