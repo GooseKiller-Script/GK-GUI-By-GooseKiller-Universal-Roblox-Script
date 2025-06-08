@@ -67,12 +67,6 @@ createButton("GK-Hub", function()
 	end)
 end)
 
-createButton("Auto Kill", function()
-	pcall(function()
-		loadstring(game:HttpGet("https://raw.githubusercontent.com/GooseKiller-Script/GK-GUI-By-GooseKiller-Universal-Roblox-Script/main/AutoKill.lua"))()
-	end)
-end)
-
 createButton("Anti Cheater", function()
 	pcall(function()
 		loadstring(game:HttpGet("https://raw.githubusercontent.com/GooseKiller-Script/GK-GUI-By-GooseKiller-Universal-Roblox-Script/main/AntiCheater.lua"))()
