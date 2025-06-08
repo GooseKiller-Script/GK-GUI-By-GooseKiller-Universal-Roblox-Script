@@ -79,6 +79,12 @@ createButton("FPS Booster", function()
 	end)
 end)
 
+createButton("Dex Excutor", function()
+	pcall(function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/peyton2465/Dex/master/out.lua"))()
+	end)
+end)
+
 local closeButton = Instance.new("TextButton")
 closeButton.Size = UDim2.new(0, 30, 0, 30)
 closeButton.Position = UDim2.new(1, -35, 0, 5)
