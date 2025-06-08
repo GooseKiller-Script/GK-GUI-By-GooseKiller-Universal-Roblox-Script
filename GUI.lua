@@ -85,6 +85,12 @@ createButton("Dex Excutor", function()
 	end)
 end)
 
+createButton("Remote Spy", function()
+	pcall(function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/GooseKiller-Script/GK-GUI-By-GooseKiller-Universal-Roblox-Script/main/RemoteSpy.lua"))()
+	end)
+end)
+
 local closeButton = Instance.new("TextButton")
 closeButton.Size = UDim2.new(0, 30, 0, 30)
 closeButton.Position = UDim2.new(1, -35, 0, 5)
