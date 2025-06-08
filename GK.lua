@@ -1139,9 +1139,9 @@ CreateButton("Auto Kill", function(btn)
 		loadstring(game:HttpGet("https://raw.githubusercontent.com/GooseKiller-Script/GK-GUI-By-GooseKiller-Universal-Roblox-Script/main/AutoKill.lua"))()
 	end
 end)
-CreateButton("TriggerBot", function(btn)
+CreateButton("Slient Aim", function(btn)
 	pcall(function()
-		loadstring(game:HttpGet("https://raw.githubusercontent.com/GooseKiller-Script/GK-GUI-By-GooseKiller-Universal-Roblox-Script/main/TriggerBot.lua"))()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/GooseKiller-Script/GK-GUI-By-GooseKiller-Universal-Roblox-Script/main/SlientAim.lua"))()
 	end
 end)
 RunService.Heartbeat:Connect(function()
