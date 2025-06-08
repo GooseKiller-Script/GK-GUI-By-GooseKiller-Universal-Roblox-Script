@@ -1144,11 +1144,6 @@ CreateButton("TriggerBot", function(btn)
 		loadstring(game:HttpGet("https://raw.githubusercontent.com/GooseKiller-Script/GK-GUI-By-GooseKiller-Universal-Roblox-Script/main/TriggerBot.lua"))()
 	end
 end)
-CreateButton("Slient Aim", function(btn)
-	pcall(function()
-		loadstring(game:HttpGet("https://raw.githubusercontent.com/GooseKiller-Script/GK-GUI-By-GooseKiller-Universal-Roblox-Script/main/SlientAim.lua"))()
-	end
-end)
 RunService.Heartbeat:Connect(function()
     if Functions.ESP then
         UpdateESP() 
