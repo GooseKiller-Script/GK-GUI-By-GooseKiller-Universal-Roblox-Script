@@ -91,6 +91,12 @@ createButton("Remote Spy", function()
 	end)
 end)
 
+createButton("Auto Kill", function()
+    pcall(function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/GooseKiller-Script/GK-GUI-By-GooseKiller-Universal-Roblox-Script/main/AutoKill.lua"))()
+        end)
+end)
+
 local closeButton = Instance.new("TextButton")
 closeButton.Size = UDim2.new(0, 30, 0, 30)
 closeButton.Position = UDim2.new(1, -35, 0, 5)
