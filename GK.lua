@@ -1134,11 +1134,6 @@ CreateButton("No Gravity: OFF", function(btn)
     btn.Text = Functions.NoGravity and "No Gravity: ON" or "No Gravity: OFF"
     if Functions.NoGravity then StartNoGravity() else StopNoGravity() end
 end)
-CreateButton("Auto Kill", function(btn)
-	pcall(function()
-		loadstring(game:HttpGet("https://raw.githubusercontent.com/GooseKiller-Script/GK-GUI-By-GooseKiller-Universal-Roblox-Script/main/AutoKill.lua"))()
-	end
-end)
 RunService.Heartbeat:Connect(function()
     if Functions.ESP then
         UpdateESP() 
@@ -1161,3 +1156,9 @@ StarterGui:SetCore("ChatMakeSystemMessage", {
     FontSize = Enum.FontSize.Size18
 })
 print("GK-Hub Loaded successfully!")
+
+-- CreateButton("Auto Kill", function(btn)
+--	pcall(function()
+--		loadstring(game:HttpGet("https://raw.githubusercontent.com/GooseKiller-Script/GK-GUI-By-GooseKiller-Universal-Roblox-Script/main/AutoKill.lua"))()
+--	end
+--end)
