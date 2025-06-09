@@ -1129,15 +1129,15 @@ end)
 CreateButton("Teleport Up (500 studs)", function(btn) 
     TeleportUp(500)
 end)
+CreateButton("Auto Kill", function(btn)
+    pcall(function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/GooseKiller-Script/GK-GUI-By-GooseKiller-Universal-Roblox-Script/main/AutoKill.lua"))()
+    end
+end)
 CreateButton("No Gravity: OFF", function(btn)
     Functions.NoGravity = not Functions.NoGravity
     btn.Text = Functions.NoGravity and "No Gravity: ON" or "No Gravity: OFF"
     if Functions.NoGravity then StartNoGravity() else StopNoGravity() end
-end)
-CreateButton("Auto Kill", function(btn)
-	pcall(function()
-		loadstring(game:HttpGet("https://raw.githubusercontent.com/GooseKiller-Script/GK-GUI-By-GooseKiller-Universal-Roblox-Script/main/AutoKill.lua"))()
-	end)
 end)
 RunService.Heartbeat:Connect(function()
     if Functions.ESP then
