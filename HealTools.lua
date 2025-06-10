@@ -26,7 +26,7 @@ local function createButton(parent, positionY, text)
     return button
 end
 
-local healButton = createButton(screenGui, 10, "Heal +10")
+local healButton = createButton(screenGui, 10, "Heal +100")
 local autoHealButton = createButton(screenGui, 70, "Auto Heal: OFF")
 
 local autoHealEnabled = false
@@ -41,7 +41,7 @@ local function healPlayer(amount)
 end
 
 healButton.MouseButton1Click:Connect(function()
-    healPlayer(10)
+    healPlayer(100)
 end)
 
 autoHealButton.MouseButton1Click:Connect(function()
@@ -50,7 +50,7 @@ autoHealButton.MouseButton1Click:Connect(function()
         autoHealButton.Text = "Auto Heal: ON"
         task.spawn(function()
             while autoHealEnabled do
-                healPlayer(10)
+                healPlayer(100)
                 wait(0.5)
             end
         end)
