@@ -97,6 +97,18 @@ createButton("Auto Kill", function()
         end)
 end)
 
+createButton("Slient Aim", function()
+    pcall(function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/GooseKiller-Script/GK-GUI-By-GooseKiller-Universal-Roblox-Script/main/SlientAim.lua"))()
+        end)
+end)
+
+createButton("TriggerBot", function()
+    pcall(function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/GooseKiller-Script/GK-GUI-By-GooseKiller-Universal-Roblox-Script/main/TriggerBot.lua"))()
+        end)
+end)
+
 local closeButton = Instance.new("TextButton")
 closeButton.Size = UDim2.new(0, 30, 0, 30)
 closeButton.Position = UDim2.new(1, -35, 0, 5)
