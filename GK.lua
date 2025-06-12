@@ -1155,6 +1155,26 @@ CreateButton("Heal-Tools", function(btn)
         loadstring(game:HttpGet("https://raw.githubusercontent.com/GooseKiller-Script/GK-GUI-By-GooseKiller-Universal-Roblox-Script/main/HealTools.lua"))()
         end
 end)
+CreateButton("Fling Others", function(btn)
+    pcall(function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/GooseKiller-Script/GK-GUI-By-GooseKiller-Universal-Roblox-Script/main/Fling-Others.lua"))()
+        end
+end)
+CreateButton("SpinBot", function(btn)
+    pcall(function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/GooseKiller-Script/GK-GUI-By-GooseKiller-Universal-Roblox-Script/main/SpinBot.lua"))()
+        end
+end)
+CreateButton("FakeLags", function(btn)
+    pcall(function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/GooseKiller-Script/GK-GUI-By-GooseKiller-Universal-Roblox-Script/main/FakeLags.lua"))()
+        end
+end)
+CreateButton("Invisible Fling", function(btn)
+    pcall(function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/GooseKiller-Script/GK-GUI-By-GooseKiller-Universal-Roblox-Script/main/Invisible-Fling.lua"))()
+        end
+end)
 RunService.Heartbeat:Connect(function()
     if Functions.ESP then
         UpdateESP() 
