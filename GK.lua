@@ -1134,47 +1134,6 @@ CreateButton("No Gravity: OFF", function(btn)
     btn.Text = Functions.NoGravity and "No Gravity: ON" or "No Gravity: OFF"
     if Functions.NoGravity then StartNoGravity() else StopNoGravity() end
 end)
-CreateButton("Auto Kill", function(btn)
-    pcall(function()
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/GooseKiller-Script/GK-GUI-By-GooseKiller-Universal-Roblox-Script/main/AutoKill.lua"))()
-        end
-end)
-CreateButton("Slient Aim", function(btn)
-    pcall(function()
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/GooseKiller-Script/GK-GUI-By-GooseKiller-Universal-Roblox-Script/main/SlientAim.lua"))()
-        end
-end)
-
-CreateButton("TriggerBot", function(btn)
-    pcall(function()
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/GooseKiller-Script/GK-GUI-By-GooseKiller-Universal-Roblox-Script/main/TriggerBot.lua"))()
-        end
-end)
-CreateButton("Heal-Tools", function(btn)
-    pcall(function()
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/GooseKiller-Script/GK-GUI-By-GooseKiller-Universal-Roblox-Script/main/HealTools.lua"))()
-        end
-end)
-CreateButton("Fling Others", function(btn)
-    pcall(function()
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/GooseKiller-Script/GK-GUI-By-GooseKiller-Universal-Roblox-Script/main/Fling-Others.lua"))()
-        end
-end)
-CreateButton("SpinBot", function(btn)
-    pcall(function()
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/GooseKiller-Script/GK-GUI-By-GooseKiller-Universal-Roblox-Script/main/SpinBot.lua"))()
-        end
-end)
-CreateButton("FakeLags", function(btn)
-    pcall(function()
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/GooseKiller-Script/GK-GUI-By-GooseKiller-Universal-Roblox-Script/main/FakeLags.lua"))()
-        end
-end)
-CreateButton("Invisible Fling", function(btn)
-    pcall(function()
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/GooseKiller-Script/GK-GUI-By-GooseKiller-Universal-Roblox-Script/main/Invisible-Fling.lua"))()
-        end
-end)
 RunService.Heartbeat:Connect(function()
     if Functions.ESP then
         UpdateESP() 
