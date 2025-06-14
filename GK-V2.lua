@@ -94,7 +94,21 @@ local function CreateButton(text, callback)
     end)
     return btn
 end
-CreateButton("TriggerBot", function()
+CreateButton("TriggerBot", function(btn)
+	pcall(function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/GooseKiller-Script/GK-GUI-By-GooseKiller-Universal-Roblox-Script/main/TriggerBot.lua"))()
+	end
+end)
+CreateButton("Slient Aim", function(btn)
+	pcall(function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/GooseKiller-Script/GK-GUI-By-GooseKiller-Universal-Roblox-Script/main/SlientAim.lua"))()
+	end
+end)
+createButton("FakeLags", function(btn)
+	pcall(function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/GooseKiller-Script/GK-GUI-By-GooseKiller-Universal-Roblox-Script/main/FakeLags.lua"))()
+	end
+end)
 task.wait(0.5)     
 StarterGui:SetCore("SendNotification", {
     Title = "GK-Hub",
