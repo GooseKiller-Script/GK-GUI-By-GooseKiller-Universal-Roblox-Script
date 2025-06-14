@@ -61,9 +61,15 @@ local function createButton(text, callback)
 	button.MouseButton1Click:Connect(callback)
 end
 
-createButton("GK-Hub", function()
+createButton("GK-Hub V1", function()
 	pcall(function()
-		loadstring(game:HttpGet("https://raw.githubusercontent.com/GooseKiller-Script/GK-GUI-By-GooseKiller-Universal-Roblox-Script/main/GK.lua"))()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/GooseKiller-Script/GK-GUI-By-GooseKiller-Universal-Roblox-Script/main/GK-V1.lua"))()
+	end)
+end)
+
+createButton("GK-Hub V2", function()
+	pcall(function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/GooseKiller-Script/GK-GUI-By-GooseKiller-Universal-Roblox-Script/main/GK-V2.lua"))()
 	end)
 end)
 
