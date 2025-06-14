@@ -78,7 +78,23 @@ UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
 UIListLayout.Padding = UDim.new(0, 8)
 ToggleIcon.MouseButton1Click:Connect(ToggleMainMenu)
 CloseButton.MouseButton1Click:Connect(ToggleMainMenu)
-
+local function CreateButton(text, callback)
+    local btn = Instance.new("TextButton")
+    btn.Name = text:gsub("[: %.%-]", "") 
+    btn.Size = UDim2.new(1, -10, 0, 40)
+    btn.BackgroundColor3 = Color3.fromRGB(35, 0, 0)
+    btn.BorderColor3 = Color3.fromRGB(255, 0, 0)
+    btn.TextColor3 = Color3.fromRGB(255, 255, 255)
+    btn.Font = Enum.Font.SourceSansBold
+    btn.TextSize = 18
+    btn.Text = text
+    btn.Parent = ScrollFrame
+    btn.MouseButton1Click:Connect(function()
+        pcall(callback, btn) 
+    end)
+    return btn
+end
+CreateButton("TriggerBot", function()
 task.wait(0.5)     
 StarterGui:SetCore("SendNotification", {
     Title = "GK-Hub",
