@@ -109,6 +109,26 @@ createButton("FakeLags", function(btn)
 		loadstring(game:HttpGet("https://raw.githubusercontent.com/GooseKiller-Script/GK-GUI-By-GooseKiller-Universal-Roblox-Script/main/FakeLags.lua"))()
 	end
 end)
+CreateButton("Heal-Tools", function(btn)
+	pcall(function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/GooseKiller-Script/GK-GUI-By-GooseKiller-Universal-Roblox-Script/main/HealTools.lua"))()
+	end
+end)
+CreateButton("SpinBot", function(btn)
+	pcall(function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/GooseKiller-Script/GK-GUI-By-GooseKiller-Universal-Roblox-Script/main/SpinBot.lua"))()
+	end
+end)
+CreateButton("Fling Others", function(btj)
+	pcall(function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/GooseKiller-Script/GK-GUI-By-GooseKiller-Universal-Roblox-Script/main/Fling-Others.lua"))()
+	end
+end)
+CreateButton("Invisible Fling", function()
+	pcall(function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/GooseKiller-Script/GK-GUI-By-GooseKiller-Universal-Roblox-Script/main/Invisible-Fling.lua"))()
+	end
+end)
 task.wait(0.5)     
 StarterGui:SetCore("SendNotification", {
     Title = "GK-Hub",
