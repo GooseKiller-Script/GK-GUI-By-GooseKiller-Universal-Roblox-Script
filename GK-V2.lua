@@ -78,56 +78,53 @@ UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
 UIListLayout.Padding = UDim.new(0, 8)
 ToggleIcon.MouseButton1Click:Connect(ToggleMainMenu)
 CloseButton.MouseButton1Click:Connect(ToggleMainMenu)
-local function CreateButton(text, callback)
-    local btn = Instance.new("TextButton")
-    btn.Name = text:gsub("[: %.%-]", "") 
-    btn.Size = UDim2.new(1, -10, 0, 40)
-    btn.BackgroundColor3 = Color3.fromRGB(35, 0, 0)
-    btn.BorderColor3 = Color3.fromRGB(255, 0, 0)
-    btn.TextColor3 = Color3.fromRGB(255, 255, 255)
-    btn.Font = Enum.Font.SourceSansBold
-    btn.TextSize = 18
-    btn.Text = text
-    btn.Parent = ScrollFrame
-    btn.MouseButton1Click:Connect(function()
-        pcall(callback, btn) 
-    end)
-    return btn
+local function createButton(text, callback)
+	local button = Instance.new("TextButton")
+	button.Size = UDim2.new(1, -40, 0, 40)
+	button.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+	button.BorderColor3 = Color3.fromRGB(255, 0, 0)
+	button.BorderSizePixel = 2
+	button.Text = text
+	button.TextColor3 = Color3.fromRGB(255, 0, 0)
+	button.Font = Enum.Font.GothamBold
+	button.TextSize = 20
+	button.Parent = ScrollingFrame
+	button.MouseButton1Click:Connect(callback)
 end
-CreateButton("TriggerBot", function(btn)
+createButton("TriggerBot", function()
 	pcall(function()
 		loadstring(game:HttpGet("https://raw.githubusercontent.com/GooseKiller-Script/GK-GUI-By-GooseKiller-Universal-Roblox-Script/main/TriggerBot.lua"))()
-	end
+	end)
 end)
-CreateButton("Slient Aim", function(btn)
+createButton("Slient Aim", function()
 	pcall(function()
 		loadstring(game:HttpGet("https://raw.githubusercontent.com/GooseKiller-Script/GK-GUI-By-GooseKiller-Universal-Roblox-Script/main/SlientAim.lua"))()
-	end
+	end)
 end)
-createButton("FakeLags", function(btn)
+createButton("FakeLags", function()
 	pcall(function()
 		loadstring(game:HttpGet("https://raw.githubusercontent.com/GooseKiller-Script/GK-GUI-By-GooseKiller-Universal-Roblox-Script/main/FakeLags.lua"))()
-	end
+	end)
 end)
-CreateButton("Heal-Tools", function(btn)
+createButton("Heal-Tools", function()
 	pcall(function()
 		loadstring(game:HttpGet("https://raw.githubusercontent.com/GooseKiller-Script/GK-GUI-By-GooseKiller-Universal-Roblox-Script/main/HealTools.lua"))()
-	end
+	end)
 end)
-CreateButton("SpinBot", function(btn)
+createButton("SpinBot", function()
 	pcall(function()
 		loadstring(game:HttpGet("https://raw.githubusercontent.com/GooseKiller-Script/GK-GUI-By-GooseKiller-Universal-Roblox-Script/main/SpinBot.lua"))()
-	end
+	end)
 end)
-CreateButton("Fling Others", function(btj)
+createButton("Fling Others", function()
 	pcall(function()
 		loadstring(game:HttpGet("https://raw.githubusercontent.com/GooseKiller-Script/GK-GUI-By-GooseKiller-Universal-Roblox-Script/main/Fling-Others.lua"))()
-	end
+	end)
 end)
-CreateButton("Invisible Fling", function()
+createButton("Invisible Fling", function()
 	pcall(function()
 		loadstring(game:HttpGet("https://raw.githubusercontent.com/GooseKiller-Script/GK-GUI-By-GooseKiller-Universal-Roblox-Script/main/Invisible-Fling.lua"))()
-	end
+	end)
 end)
 task.wait(0.5)     
 StarterGui:SetCore("SendNotification", {
