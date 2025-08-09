@@ -1,0 +1,732 @@
+﻿-- // Инициализация
+local Players = game:GetService("Players")
+local LP = Players.LocalPlayer
+local UIS = game:GetService("UserInputService")
+local StarterGui = game:GetService("StarterGui")
+local Lighting = game:GetService("Lighting")
+local Workspace = game:GetService("Workspace")
+
+-- // Настраиваемые цвета (СТРОГО черно-белая тема)
+local MENU_COLOR = Color3.fromRGB(15, 15, 15)
+local MENU_STROKE_COLOR = Color3.fromRGB(200, 200, 200)
+local BUTTON_BG_COLOR = Color3.fromRGB(25, 25, 25)
+local BUTTON_TEXT_COLOR = Color3.fromRGB(255, 255, 255)
+local BUTTON_HOVER_COLOR = Color3.fromRGB(40, 40, 40)
+local CLOSE_BUTTON_COLOR = Color3.fromRGB(255, 255, 255)
+local CLOSE_BUTTON_HOVER_COLOR = Color3.fromRGB(200, 200, 200)
+local ON_COLOR = Color3.fromRGB(255, 255, 255) -- Включен
+local OFF_COLOR = Color3.fromRGB(50, 50, 50) -- Выключен
+local SLIDER_BG_COLOR = Color3.fromRGB(40, 40, 40)
+local SLIDER_FILL_COLOR = Color3.fromRGB(255, 255, 255)
+local ESP_COLOR = Color3.fromRGB(150, 150, 150) -- Цвет для ESP
+
+-- // Настраиваемые значения
+local DEFAULT_WALKSPEED = 16
+local DEFAULT_JUMPPOWER = 50
+local NO_CLIP_TOGGLE_KEY = Enum.KeyCode.E
+
+-- // ScreenGui
+local SG = Instance.new("ScreenGui", game.CoreGui)
+SG.ResetOnSpawn = false
+
+-- // Функция перетаскивания
+local function MakeDraggable(obj, handle)
+        handle = handle or obj
+        local dragging, dragStart, startPos
+        handle.InputBegan:Connect(function(input)
+                if input.UserInputType == Enum.UserInputType.MouseButton1 then
+                        dragging = true
+                        dragStart = input.Position
+                        startPos = obj.Position
+                        input.Changed:Connect(function()
+                                if input.UserInputState == Enum.UserInputState.End then
+                                        dragging = false
+                                end
+                        end)
+                end
+        end)
+        UIS.InputChanged:Connect(function(input)
+                if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
+                        local delta = input.Position - dragStart
+                        obj.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+                end
+        end)
+end
+
+-- // Текстовая кнопка "Roblox" вместо иконки
+local Icon = Instance.new("TextButton", SG)
+Icon.Size = UDim2.new(0, 90, 0, 50)
+Icon.Position = UDim2.new(1, -100, 0.5, -25)
+Icon.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+Icon.BackgroundTransparency = 0.2
+Icon.Text = "Roblox"
+Icon.TextColor3 = BUTTON_TEXT_COLOR
+Icon.Font = Enum.Font.GothamBold
+Icon.TextScaled = true
+Instance.new("UICorner", Icon).CornerRadius = UDim.new(0, 8)
+MakeDraggable(Icon)
+
+-- // Главное меню Frame
+local Menu = Instance.new("Frame", SG)
+Menu.Size = UDim2.new(0, 360, 0, 460)
+Menu.Position = UDim2.new(0.5, -180, 0.5, -230)
+Menu.BackgroundColor3 = MENU_COLOR
+Menu.BackgroundTransparency = 0
+Menu.BorderSizePixel = 0
+Instance.new("UICorner", Menu).CornerRadius = UDim.new(0, 18)
+Menu.Visible = false
+MakeDraggable(Menu)
+
+-- // Эффект свечения — UIStroke
+local stroke = Instance.new("UIStroke", Menu)
+stroke.Color = MENU_STROKE_COLOR
+stroke.Thickness = 3
+stroke.Transparency = 0.5
+
+-- // Заголовок меню
+local Title = Instance.new("TextLabel", Menu)
+Title.Size = UDim2.new(1, 0, 0, 45)
+Title.Position = UDim2.new(0, 0, 0, 5)
+Title.BackgroundTransparency = 1
+Title.Text = "Roblox GUI"
+Title.TextColor3 = MENU_STROKE_COLOR
+Title.Font = Enum.Font.GothamBold
+Title.TextScaled = true
+Title.TextStrokeTransparency = 0.3
+
+-- // Кнопка закрытия (крестик)
+local CloseBtn = Instance.new("TextButton", Menu)
+CloseBtn.Size = UDim2.new(0, 30, 0, 30)
+CloseBtn.Position = UDim2.new(1, -38, 0, 8)
+CloseBtn.BackgroundColor3 = CLOSE_BUTTON_COLOR
+CloseBtn.Text = "✕"
+CloseBtn.TextScaled = true
+CloseBtn.TextColor3 = Color3.fromRGB(0,0,0)
+CloseBtn.Font = Enum.Font.GothamBold
+CloseBtn.AutoButtonColor = false
+Instance.new("UICorner", CloseBtn).CornerRadius = UDim.new(0, 6)
+
+CloseBtn.MouseEnter:Connect(function()
+        CloseBtn.BackgroundColor3 = CLOSE_BUTTON_HOVER_COLOR
+end)
+CloseBtn.MouseLeave:Connect(function()
+        CloseBtn.BackgroundColor3 = CLOSE_BUTTON_COLOR
+end)
+
+CloseBtn.MouseButton1Click:Connect(function()
+        Menu.Visible = false
+        Icon.Visible = true
+end)
+
+-- // Скролл фрейм для кнопок
+local ScrollFrame = Instance.new("ScrollingFrame", Menu)
+ScrollFrame.Size = UDim2.new(1, -30, 1, -70)
+ScrollFrame.Position = UDim2.new(0, 15, 0, 55)
+ScrollFrame.CanvasSize = UDim2.new(0, 0, 0, 600)
+ScrollFrame.ScrollBarThickness = 10
+ScrollFrame.BackgroundTransparency = 1
+ScrollFrame.VerticalScrollBarInset = Enum.ScrollBarInset.Always
+ScrollFrame.AutomaticCanvasSize = Enum.AutomaticSize.Y
+
+-- // UIListLayout для авторасположения кнопок
+local UIList = Instance.new("UIListLayout", ScrollFrame)
+UIList.SortOrder = Enum.SortOrder.LayoutOrder
+UIList.Padding = UDim.new(0, 15)
+
+-- // Функция создания кнопок
+local function CreateButton(parent, text, callback)
+        local b = Instance.new("TextButton", parent)
+        b.Size = UDim2.new(1, 0, 0, 50)
+        b.BackgroundColor3 = BUTTON_BG_COLOR
+        b.BorderSizePixel = 0
+        b.Text = text
+        b.TextColor3 = BUTTON_TEXT_COLOR
+        b.TextScaled = true
+        b.Font = Enum.Font.GothamSemibold
+        b.AutoButtonColor = false
+        b.ClipsDescendants = true
+        b.LayoutOrder = #parent:GetChildren()
+
+        local stroke = Instance.new("UIStroke", b)
+        stroke.Color = MENU_STROKE_COLOR
+        stroke.Thickness = 2
+        stroke.Transparency = 0.6
+
+        b.MouseEnter:Connect(function()
+                b.BackgroundColor3 = BUTTON_HOVER_COLOR
+                stroke.Transparency = 0.2
+        end)
+        b.MouseLeave:Connect(function()
+                b.BackgroundColor3 = BUTTON_BG_COLOR
+                stroke.Transparency = 0.6
+        end)
+
+        b.MouseButton1Click:Connect(function()
+                callback(b)
+        end)
+        return b
+end
+
+-- // -- Модифицированное меню
+local ModMenuFrame = Instance.new("Frame", Menu)
+ModMenuFrame.Size = UDim2.new(1, -30, 1, -70)
+ModMenuFrame.Position = UDim2.new(0, 15, 0, 55)
+ModMenuFrame.BackgroundColor3 = MENU_COLOR
+ModMenuFrame.BackgroundTransparency = 1
+ModMenuFrame.BorderSizePixel = 0
+ModMenuFrame.Visible = false
+
+local ModMenuScrollFrame = Instance.new("ScrollingFrame", ModMenuFrame)
+ModMenuScrollFrame.Size = UDim2.new(1, 0, 1, 0)
+ModMenuScrollFrame.CanvasSize = UDim2.new(0, 0, 0, 600)
+ModMenuScrollFrame.ScrollBarThickness = 10
+ModMenuScrollFrame.BackgroundTransparency = 1
+ModMenuScrollFrame.VerticalScrollBarInset = Enum.ScrollBarInset.Always
+ModMenuScrollFrame.AutomaticCanvasSize = Enum.AutomaticSize.Y
+
+local ModMenuUIList = Instance.new("UIListLayout", ModMenuScrollFrame)
+ModMenuUIList.SortOrder = Enum.SortOrder.LayoutOrder
+ModMenuUIList.Padding = UDim.new(0, 15)
+
+-- // -- Функции и переменные для мод-меню
+local espLineEnabled = false
+local espHitboxEnabled = false
+local espParts = {}
+local isNoGravityEnabled = false
+local isInfiniteJumpEnabled = false
+local isNoClipEnabled = false
+local isFrozen = false
+local isAimBotEnabled = false
+local isWalkingBotEnabled = false
+local isSpinBotEnabled = false
+local isAutoKillEnabled = false
+local noGravityForce = nil
+
+local function updateButtonState(button, state)
+        if state then
+                button.BackgroundColor3 = ON_COLOR
+                button.Text = button.Text:match("(.+):") .. " ON"
+                button.TextColor3 = Color3.fromRGB(0, 0, 0)
+        else
+                button.BackgroundColor3 = OFF_COLOR
+                button.Text = button.Text:match("(.+):") .. " OFF"
+                button.TextColor3 = Color3.new(1, 1, 1)
+        end
+end
+
+-- // Функции ESP
+local function createLine(from, to, color)
+        local line = Instance.new("Part")
+        line.Anchored = true
+        line.CanCollide = false
+        line.CastsShadow = false
+        line.BrickColor = BrickColor.new(color)
+        line.Material = Enum.Material.Neon
+        line.Transparency = 0.5
+        line.Size = Vector3.new(0.1, 0.1, 0.1)
+        line.Parent = Workspace
+
+        local distance = (from - to).Magnitude
+        line.Size = Vector3.new(0.1, 0.1, distance)
+        line.CFrame = CFrame.new(from:Lerp(to, 0.5), to)
+
+        return line
+end
+
+local function createHitboxESP(character)
+   local espAdornment = Instance.new("BoxHandleAdornment")
+   espAdornment.Size = character.HumanoidRootPart.Size
+   espAdornment.Adornee = character.HumanoidRootPart
+   espAdornment.Color3 = ESP_COLOR
+   espAdornment.Transparency = 0.5
+   espAdornment.AlwaysOnTop = true
+   espAdornment.ZIndex = 1
+   espAdornment.Parent = character.HumanoidRootPart
+   return espAdornment
+end
+
+local function updateESP()
+        for _, part in pairs(espParts) do
+                part:Destroy()
+        end
+        espParts = {}
+
+        local myHRP = LP.Character and LP.Character:FindFirstChild("HumanoidRootPart")
+        if not myHRP then return end
+
+        for _, player in pairs(Players:GetPlayers()) do
+                if player ~= LP and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+                        if espLineEnabled then
+                                local theirHRP = player.Character.HumanoidRootPart
+                                local line = createLine(myHRP.Position, theirHRP.Position, "Cyan")
+                                table.insert(espParts, line)
+                        end
+                        if espHitboxEnabled then
+                                local adornment = createHitboxESP(player.Character)
+                                table.insert(espParts, adornment)
+                        end
+                end
+        end
+end
+
+local function toggleESPLine()
+        espLineEnabled = not espLineEnabled
+        if espLineEnabled or espHitboxEnabled then
+                game:GetService("RunService").RenderStepped:Connect(updateESP)
+                print("ESP Line enabled")
+        else
+                for _, part in pairs(espParts) do
+                        part:Destroy()
+                end
+                espParts = {}
+                print("ESP Line disabled")
+        end
+end
+
+local function toggleHitboxESP()
+   espHitboxEnabled = not espHitboxEnabled
+        if espLineEnabled or espHitboxEnabled then
+                game:GetService("RunService").RenderStepped:Connect(updateESP)
+                print("Hitbox ESP enabled")
+        else
+                for _, part in pairs(espParts) do
+                        part:Destroy()
+                end
+                espParts = {}
+                print("Hitbox ESP disabled")
+        end
+end
+
+-- // Функции новых модов
+local function findNearestPlayer()
+   local nearestPlayer, minDistance = nil, math.huge
+   local myHRP = LP.Character and LP.Character:FindFirstChild("HumanoidRootPart")
+   if not myHRP then return nil end
+
+   for _, player in pairs(Players:GetPlayers()) do
+       if player ~= LP and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+           local theirHRP = player.Character.HumanoidRootPart
+           local distance = (myHRP.Position - theirHRP.Position).Magnitude
+           if distance < minDistance then
+               minDistance = distance
+               nearestPlayer = player
+           end
+       end
+   end
+   return nearestPlayer
+end
+
+local function aimAtNearestPlayer()
+   local nearestPlayer = findNearestPlayer()
+   if not nearestPlayer or not LP.Character or not LP.Character:FindFirstChild("HumanoidRootPart") then return end
+
+   local targetPosition = nearestPlayer.Character.HumanoidRootPart.Position
+   local myPosition = LP.Character.HumanoidRootPart.Position
+   local camera = Workspace.CurrentCamera
+   camera.CFrame = CFrame.new(camera.CFrame.Position, targetPosition)
+end
+
+local function toggleAimBot()
+   isAimBotEnabled = not isAimBotEnabled
+   if isAimBotEnabled then
+       game:GetService("RunService").RenderStepped:Connect(aimAtNearestPlayer)
+       print("AimBot: ON")
+   else
+       print("AimBot: OFF")
+   end
+end
+
+local function walkToNearestPlayer()
+   local nearestPlayer = findNearestPlayer()
+   local humanoid = LP.Character and LP.Character:FindFirstChildOfClass("Humanoid")
+   if not nearestPlayer or not humanoid then return end
+   
+   humanoid:MoveTo(nearestPlayer.Character.HumanoidRootPart.Position)
+end
+
+local function toggleWalkingBot()
+   isWalkingBotEnabled = not isWalkingBotEnabled
+   if isWalkingBotEnabled then
+       game:GetService("RunService").RenderStepped:Connect(walkToNearestPlayer)
+       print("WalkingBot: ON")
+   else
+       local humanoid = LP.Character and LP.Character:FindFirstChildOfClass("Humanoid")
+       if humanoid then humanoid.WalkToPoint = nil end
+       print("WalkingBot: OFF")
+   end
+end
+
+local function toggleSpinBot()
+   isSpinBotEnabled = not isSpinBotEnabled
+   if isSpinBotEnabled then
+       local connection
+       connection = game:GetService("RunService").RenderStepped:Connect(function()
+           if not isSpinBotEnabled then connection:Disconnect() return end
+           local hrp = LP.Character and LP.Character:FindFirstChild("HumanoidRootPart")
+           if hrp then
+               hrp.CFrame = hrp.CFrame * CFrame.Angles(0, math.rad(10), 0)
+           end
+       end)
+       print("SpinBot: ON")
+   else
+       print("SpinBot: OFF")
+   end
+end
+
+local autoKillCoroutine = nil
+local function autoKillLogic()
+   local humanoid = LP.Character and LP.Character:FindFirstChildOfClass("Humanoid")
+   local myHRP = LP.Character and LP.Character:FindFirstChild("HumanoidRootPart")
+   if not humanoid or not myHRP then return end
+
+   while isAutoKillEnabled do
+       local nearestPlayer = findNearestPlayer()
+       if nearestPlayer and nearestPlayer.Character and nearestPlayer.Character:FindFirstChild("HumanoidRootPart") then
+           local theirHRP = nearestPlayer.Character.HumanoidRootPart
+           myHRP.CFrame = theirHRP.CFrame * CFrame.new(0, 5, 0)
+           
+           local deathConnection
+           deathConnection = nearestPlayer.Character.Humanoid.Died:Connect(function()
+               deathConnection:Disconnect()
+           end)
+           
+           wait(0.5) -- Даем время на атаку
+           
+           deathConnection.Wait()
+           
+       else
+           wait(1)
+       end
+   end
+end
+
+local function toggleAutoKill()
+   isAutoKillEnabled = not isAutoKillEnabled
+   if isAutoKillEnabled then
+       if not autoKillCoroutine then
+           autoKillCoroutine = coroutine.create(autoKillLogic)
+           coroutine.resume(autoKillCoroutine)
+       end
+       print("AutoKill: ON")
+   else
+       if autoKillCoroutine then
+           coroutine.yield(autoKillCoroutine)
+           autoKillCoroutine = nil
+       end
+       print("AutoKill: OFF")
+   end
+end
+
+local function toggleInfiniteJump()
+        isInfiniteJumpEnabled = not isInfiniteJumpEnabled
+        local humanoid = LP.Character and LP.Character:FindFirstChildOfClass("Humanoid")
+        if not humanoid then return end
+
+        if isInfiniteJumpEnabled then
+                local function onJumpRequest()
+                        if isInfiniteJumpEnabled then
+                                humanoid.Jump = true
+                        end
+                end
+                UIS.JumpRequest:Connect(onJumpRequest)
+                print("Infinite Jump: ON")
+        else
+                print("Infinite Jump: OFF")
+        end
+end
+
+local function toggleNoGravity()
+        isNoGravityEnabled = not isNoGravityEnabled
+        local hrp = LP.Character and LP.Character:FindFirstChild("HumanoidRootPart")
+        if not hrp then return end
+
+        if isNoGravityEnabled then
+                noGravityForce = Instance.new("VectorForce", hrp)
+                noGravityForce.Force = Vector3.new(0, Workspace.Gravity * hrp:GetMass(), 0)
+                noGravityForce.RelativeTo = Enum.ActuatorRelativeTo.World
+                noGravityForce.Attachment0 = Instance.new("Attachment", hrp)
+                print("NoGravity: ON")
+        else
+                if noGravityForce then
+                        noGravityForce:Destroy()
+                        noGravityForce = nil
+                end
+                print("NoGravity: OFF")
+        end
+end
+
+local function toggleNoClip()
+   isNoClipEnabled = not isNoClipEnabled
+   
+   local character = LP.Character
+   if not character then return end
+   
+   for _, part in ipairs(character:GetDescendants()) do
+       if part:IsA("BasePart") then
+           part.CanCollide = not isNoClipEnabled
+       end
+   end
+
+   if isNoClipEnabled then
+       print("NoClip: ON")
+   else
+       print("NoClip: OFF")
+   end
+end
+
+local function toggleFreeze()
+   isFrozen = not isFrozen
+
+   local humanoid = LP.Character and LP.Character:FindFirstChildOfClass("Humanoid")
+   local hrp = LP.Character and LP.Character:FindFirstChild("HumanoidRootPart")
+   
+   if humanoid and hrp then
+       if isFrozen then
+           humanoid.WalkSpeed = 0
+           humanoid.JumpPower = 0
+           hrp.Anchored = true
+           print("Freeze: ON")
+       else
+           humanoid.WalkSpeed = DEFAULT_WALKSPEED
+           humanoid.JumpPower = DEFAULT_JUMPPOWER
+           hrp.Anchored = false
+           print("Freeze: OFF")
+       end
+   end
+end
+
+-- // Элемент ползунка скорости
+local speedSliderFrame = Instance.new("Frame", ModMenuScrollFrame)
+speedSliderFrame.Size = UDim2.new(1, 0, 0, 60)
+speedSliderFrame.BackgroundTransparency = 1
+speedSliderFrame.LayoutOrder = 1
+
+local speedLabel = Instance.new("TextLabel", speedSliderFrame)
+speedLabel.Size = UDim2.new(0.5, 0, 0.5, 0)
+speedLabel.Position = UDim2.new(0, 0, 0, 0)
+speedLabel.BackgroundTransparency = 1
+speedLabel.Text = "Speed: 16"
+speedLabel.TextColor3 = BUTTON_TEXT_COLOR
+speedLabel.Font = Enum.Font.GothamSemibold
+speedLabel.TextScaled = true
+speedLabel.TextXAlignment = Enum.TextXAlignment.Left
+
+local sliderContainer = Instance.new("Frame", speedSliderFrame)
+sliderContainer.Size = UDim2.new(1, 0, 0.5, 0)
+sliderContainer.Position = UDim2.new(0, 0, 0.5, 0)
+sliderContainer.BackgroundColor3 = SLIDER_BG_COLOR
+
+local sliderTrack = Instance.new("Frame", sliderContainer)
+sliderTrack.Size = UDim2.new(1, -20, 0, 10)
+sliderTrack.Position = UDim2.new(0, 10, 0.5, -5)
+sliderTrack.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+
+local sliderFill = Instance.new("Frame", sliderTrack)
+sliderFill.Size = UDim2.new(0, 0, 1, 0)
+sliderFill.BackgroundColor3 = SLIDER_FILL_COLOR
+Instance.new("UICorner", sliderFill).CornerRadius = UDim.new(0, 5)
+
+local sliderThumb = Instance.new("Frame", sliderTrack)
+sliderThumb.Size = UDim2.new(0, 15, 0, 15)
+sliderThumb.Position = UDim2.new(0, -7.5, 0.5, -7.5)
+sliderThumb.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Instance.new("UICorner", sliderThumb).CornerRadius = UDim.new(0, 8)
+
+local isDragging = false
+local minSpeed = 16
+local maxSpeed = 100
+
+sliderThumb.InputBegan:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 then
+                isDragging = true
+        end
+end)
+
+UIS.InputEnded:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 then
+                isDragging = false
+        end
+end)
+
+UIS.InputChanged:Connect(function(input)
+        if isDragging and input.UserInputType == Enum.UserInputType.MouseMovement then
+                local newX = math.clamp(input.Position.X - sliderTrack.AbsolutePosition.X, 0, sliderTrack.AbsoluteSize.X)
+                local newScale = newX / sliderTrack.AbsoluteSize.X
+                local newSpeed = minSpeed + (maxSpeed - minSpeed) * newScale
+
+                sliderThumb.Position = UDim2.new(newScale, -7.5, 0.5, -7.5)
+                sliderFill.Size = UDim2.new(newScale, 0, 1, 0)
+                speedLabel.Text = string.format("Speed: %d", math.floor(newSpeed))
+
+                local humanoid = LP.Character and LP.Character:FindFirstChildOfClass("Humanoid")
+                if humanoid then
+                        humanoid.WalkSpeed = newSpeed
+                end
+        end
+end)
+
+-- // -- Кнопки для обычного меню
+CreateButton(ScrollFrame, "AntiCheat Detector", function()
+        print("Anti-cheat detector is currently empty")
+end)
+
+CreateButton(ScrollFrame, "Infinite Yield FE", function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source"))()
+end)
+
+CreateButton(ScrollFrame, "Dex Explorer", function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/peyton2465/Dex/master/out.lua"))()
+end)
+
+CreateButton(ScrollFrame, "Developer Console", function()
+        StarterGui:SetCore("DevConsoleVisible", true)
+end)
+
+CreateButton(ScrollFrame, "FPS Booster", function()
+        local Lighting = game:GetService("Lighting")
+        Lighting.GlobalShadows = false
+        Lighting.ShadowSoftness = 0
+        pcall(function()
+                Lighting.Bloom.Enabled = false
+                Lighting.DepthOfField.Enabled = false
+                Lighting.AmbientOcclusionEnabled = false
+                Lighting.ColorCorrection.Enabled = false
+                Lighting.Sunset.Enabled = false
+        end)
+        game.Workspace.FogEnd = 100
+        game.Workspace.FogStart = 0
+        for _, light in pairs(game.Workspace:GetDescendants()) do
+                if light:IsA("PointLight") or light:IsA("SpotLight") or light:IsA("SurfaceLight") then
+                        light.Enabled = false
+                end
+        end
+        for _, particle in pairs(game.Workspace:GetDescendants()) do
+                if particle:IsA("ParticleEmitter") or particle:IsA("Trail") or particle:IsA("Beam") then
+                        particle.Enabled = false
+                end
+        end
+        for _, sound in pairs(game.Workspace:GetDescendants()) do
+                if sound:IsA("Sound") then
+                        sound.Playing = false
+                        sound.Volume = 0
+                end
+        end
+        print("FPS Booster applied")
+end)
+
+CreateButton(ScrollFrame, "Close All GUI", function()
+        for _, gui in pairs(game.CoreGui:GetChildren()) do
+                if gui:IsA("ScreenGui") then
+                        gui:Destroy()
+                end
+        end
+        print("All GUI closed and cleared")
+end)
+
+local ModMenuBtn = CreateButton(ScrollFrame, "Mod Menu", function()
+        for _, child in pairs(ScrollFrame:GetChildren()) do
+                if child:IsA("UIListLayout") then continue end
+                child.Visible = false
+        end
+        ModMenuFrame.Visible = true
+end)
+
+-- // -- Кнопки для мод-меню
+CreateButton(ModMenuScrollFrame, "AimBot", function(b)
+        toggleAimBot()
+        updateButtonState(b, isAimBotEnabled)
+end)
+
+CreateButton(ModMenuScrollFrame, "WalkingBot", function(b)
+        toggleWalkingBot()
+        updateButtonState(b, isWalkingBotEnabled)
+end)
+
+CreateButton(ModMenuScrollFrame, "SpinBot", function(b)
+        toggleSpinBot()
+        updateButtonState(b, isSpinBotEnabled)
+end)
+
+CreateButton(ModMenuScrollFrame, "Auto Kill", function(b)
+        toggleAutoKill()
+        updateButtonState(b, isAutoKillEnabled)
+end)
+
+CreateButton(ModMenuScrollFrame, "Freeze", function(b)
+        toggleFreeze()
+        updateButtonState(b, isFrozen)
+end)
+
+CreateButton(ModMenuScrollFrame, "NoGravity", function(b)
+        toggleNoGravity()
+        updateButtonState(b, isNoGravityEnabled)
+end)
+
+CreateButton(ModMenuScrollFrame, "ESP Line", function(b)
+        toggleESPLine()
+        updateButtonState(b, espLineEnabled)
+end)
+
+CreateButton(ModMenuScrollFrame, "Hitbox ESP", function(b)
+        toggleHitboxESP()
+        updateButtonState(b, espHitboxEnabled)
+end)
+
+CreateButton(ModMenuScrollFrame, "Infinite Jump", function(b)
+        toggleInfiniteJump()
+        updateButtonState(b, isInfiniteJumpEnabled)
+end)
+
+CreateButton(ModMenuScrollFrame, "NoClip", function(b)
+        toggleNoClip()
+        updateButtonState(b, isNoClipEnabled)
+end)
+
+local TeleportPlayersButton = CreateButton(ModMenuScrollFrame, "Teleport to Player", function()
+        for _, child in pairs(ModMenuScrollFrame:GetChildren()) do
+                if child:IsA("TextButton") and child.Name == "PlayerButton" then
+                        child:Destroy()
+                end
+        end
+
+        local playersList = Players:GetPlayers()
+        for i, player in ipairs(playersList) do
+                if player.Name ~= LP.Name then
+                        local playerButton = CreateButton(ModMenuScrollFrame, player.Name, function()
+                                local character = player.Character
+                                if character and character:FindFirstChild("HumanoidRootPart") then
+                                        LP.Character.HumanoidRootPart.CFrame = character.HumanoidRootPart.CFrame
+                                        print("Teleporting to " .. player.Name)
+                                end
+                        end)
+                        playerButton.Name = "PlayerButton"
+                end
+        end
+end)
+
+CreateButton(ModMenuScrollFrame, "Random Teleport", function()
+        local character = LP.Character
+        if character and character:FindFirstChild("HumanoidRootPart") then
+                local hrp = character.HumanoidRootPart
+                local x = math.random(-5000, 5000)
+                local z = math.random(-5000, 5000)
+                local y = math.random(100, 500)
+                hrp.CFrame = CFrame.new(x, y, z)
+                print("Random Teleport applied")
+        end
+end)
+
+local BackButton = CreateButton(ModMenuFrame, "← Назад", function()
+        ModMenuFrame.Visible = false
+        for _, child in pairs(ScrollFrame:GetChildren()) do
+                if child:IsA("UIListLayout") then continue end
+                child.Visible = true
+        end
+end)
+BackButton.LayoutOrder = 0
+
+-- // Открытие меню по иконке
+Icon.MouseButton1Click:Connect(function()
+        Menu.Visible = true
+        Icon.Visible = false
+end)
